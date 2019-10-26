@@ -1,24 +1,50 @@
 {% extends "base.html" %}
 
-{% block title %}Log in{% endblock %}
-
 {% block body %}
+ <main>
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-sm-6 col-sm-offset-3">
+				<article>
+					<h1><b>Logowanie</b></h1>
 
-    <h1>Log in</h1>
+               {% for message in flash_messages %}
+                  <div class="failure">
+                     {{ message }}
+                  </div>
+               {% endfor %}
 
-    <form action="/login/create" method="post">
+					<p>Wpisz poniższe dane, aby się zalogować</p><br />
 
-        <div>
-            <label for="inputEmail">Email address</label>
-            <input type="email" id="inputEmail" name="email" placeholder="Email address" autofocus value="{{ email }}" />
-        </div>
-        <div>
-            <label for="inputPassword">Password</label>
-            <input type="password" id="inputPassword" name="password" placeholder="Password" />
-        </div>
+					<form method="post" action="/login/create">
 
-        <button type="submit">Log in</button>
+						<div class="form-group">
+							<label for="inputEmail">Email:</label>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+								<input id="inputEmail" type="text" class="form-control" name="email" placeholder="Email" autofocus value="{{ email }}">
+							 </div>
+						</div>
+						<div class="form-group">
+   						<label for="inputPassword">Hasło:</label>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+								<input id="inputPassword" type="password" class="form-control" name="password" placeholder="Hasło">
+						   </div>
+						</div><br />
+						<div class="form-group row d-inline-block">
+							<div class="col-sm-6">
+								<button type="submit" class="btn btn-success btn-block"><b><span class="glyphicon glyphicon-ok"></span> Logowanie</b></button>
+							</div>
+							<div class="col-sm-6">
+								<a class="btn btn-danger btn-block" href="/" role="button"><b><span class="glyphicon glyphicon-remove"></span> Cancel</b></a>
+							</div>
+						</div>
 
-    </form>
-
+					</form><br />
+				</article>
+			</div>
+		</div>
+	</div>
+</main>
 {% endblock %}

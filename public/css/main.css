@@ -6,7 +6,7 @@ body
     font-size: 20px;
 }
 
-.navbar 
+.navbar
 {
    margin-bottom: 0;
    border-radius: 0;
@@ -14,7 +14,7 @@ body
    background-color: #FF9900;
 }
 
-.jumbotron 
+.jumbotron
 {
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -24,7 +24,7 @@ body
 	background-color: white;
 }
 
-.nav-pills.navbar-center 
+.nav-pills.navbar-center
 {
 	height: 60px;
 	display: flex;
@@ -61,7 +61,6 @@ body
 	right: 10px;
 	top: 10px;
 }
-
 
 .jumbotron a
 {
@@ -101,12 +100,12 @@ body
 	border-color: #FF9900;
 }
 
-.nounderline 
+.nounderline
 {
   text-decoration: none !important
 }
 
-.navbar .navbar-toggle .icon-bar 
+.navbar .navbar-toggle .icon-bar
 {
 	background-color: #FF9900;
 }
@@ -119,4 +118,14 @@ button.navbar-toggle
 button.navbar-toggle:hover
 {
     background: black;
+}
+
+.success
+{
+	color: green;
+}
+
+.failure
+{
+	color: red;
 }

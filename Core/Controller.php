@@ -3,6 +3,7 @@
 namespace Core;
 
 use \App\Auth;
+use \App\Flash;
 
 abstract class Controller
 {
@@ -36,20 +37,21 @@ abstract class Controller
     {
     }
 
-
     public function redirect($url)
     {
         header('Location: http://' . $_SERVER['HTTP_HOST'] . $url, true, 303);
         exit;
     }
-    
+
     public function requireLogin()
-    {
-        if (! Auth::getUser()) {
+  {
+      if (! Auth::getUser()) {
 
-            Auth::rememberRequestedPage();
+           Flash::addMessage('Please login to access that page');
 
-            $this->redirect('/login');
-        }
-    }
+           Auth::rememberRequestedPage();
+
+           $this->redirect('/login');
+      }
+  }
 }

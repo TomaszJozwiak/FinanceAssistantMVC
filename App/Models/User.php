@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use PDO;
+use \App\Flash;
 
 class User extends \Core\Model
 {
@@ -40,7 +41,7 @@ class User extends \Core\Model
 
             $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
 
-            $sql = 'INSERT INTO users (username, password, email)
+            $sql = 'INSERT INTO users (username, password_hash, email)
                     VALUES (:name, :password_hash, :email)';
 
             $db = static::getDB();
@@ -144,6 +145,11 @@ class User extends \Core\Model
             if (password_verify($password, $user->password_hash)) {
                 return $user;
             }
+
+            Flash::addMessage('Incorrect Password');
+        }
+        else {
+           Flash::addMessage('There is no account for that email address');
         }
 
         return false;
