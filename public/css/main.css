@@ -1,0 +1,122 @@
+body
+{
+	background-color: white;
+	margin: 0;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+}
+
+.navbar 
+{
+   margin-bottom: 0;
+   border-radius: 0;
+   border: 0;
+   background-color: #FF9900;
+}
+
+.jumbotron 
+{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	margin: 0 px;
+	margin-bottom: 0px;
+	background-color: white;
+}
+
+.nav-pills.navbar-center 
+{
+	height: 60px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.nav-pills.navbar-center a:hover
+{
+	background-color: white;
+}
+
+.income
+{
+	background: rgba( 42, 248, 42, 0.5);
+	min-height: 100px;
+	margin-top: 5px;
+	border: 5px solid green;
+	border-radius: 25px;
+}
+
+.expense
+{
+	background: rgba( 245, 152, 152, 0.5);
+	min-height: 100px;
+	margin-top: 5px;
+	border: 5px solid red;
+	border-radius: 25px;
+}
+
+.calendar_button
+{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+
+
+.jumbotron a
+{
+	text-decoration: none;
+	color: #FF9900;
+}
+
+.jumbotron a:hover
+{
+	text-decoration: none;
+	color: #FF9900;
+}
+
+.navbar .nav > li > a
+{
+	text-decoration: none;
+	color: white;
+}
+
+.navbar .nav > li > a:hover
+{
+	text-decoration: none;
+	color: #FF9900;
+	background-color: white;
+}
+
+.btn.btn-warning.btn-block.custom-btn
+{
+	background-color: #FF9900;
+}
+
+.btn.btn-warning.btn-block.custom-btn:hover
+{
+	border: 10%;
+	background-color: white;
+	color: #FF9900;
+	border-color: #FF9900;
+}
+
+.nounderline 
+{
+  text-decoration: none !important
+}
+
+.navbar .navbar-toggle .icon-bar 
+{
+	background-color: #FF9900;
+}
+
+button.navbar-toggle
+{
+    background: white;
+}
+
+button.navbar-toggle:hover
+{
+    background: black;
+}

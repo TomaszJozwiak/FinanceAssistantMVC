@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %}Sign up{% endblock %}
-
 {% block body %}
 
-    <h1>Sign up</h1>
-
-    <p>Success! Thank you for signing up.</p>
+<main>
+     <div class="container">
+        <div class="row text-center">
+           <div class="col-sm-12">
+             </br>
+             <h1>Gratulacje, rejestracja zakończona sukcesem.</h1>
+             </br>
+             <p> Możesz się teraz zalogować</p>
+             </br>
+            </div>
+            <div class="col-sm-6 col-sm-offset-3">
+               <a class="btn btn-warning btn-block custom-btn" href="/login/new" role="button"><b> <span class="glyphicon glyphicon-log-in"></span> Logowanie</b></a>
+           </div>
+        </div>
+     </div>
+  </main>
 
 {% endblock %}

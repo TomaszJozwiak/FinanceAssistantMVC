@@ -4,11 +4,6 @@ namespace App\Models;
 
 use PDO;
 
-/**
- * User model
- *
- * PHP version 7.0
- */
 class User extends \Core\Model
 {
 
@@ -18,7 +13,6 @@ class User extends \Core\Model
      * @var array
      */
     public $errors = [];
-
     /**
      * Class constructor
      *
@@ -46,8 +40,8 @@ class User extends \Core\Model
 
             $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
 
-            $sql = 'INSERT INTO users (name, email, password_hash)
-                    VALUES (:name, :email, :password_hash)';
+            $sql = 'INSERT INTO users (username, password, email)
+                    VALUES (:name, :password_hash, :email)';
 
             $db = static::getDB();
             $stmt = $db->prepare($sql);
@@ -93,6 +87,10 @@ class User extends \Core\Model
 
         if (preg_match('/.*\d+.*/i', $this->password) == 0) {
             $this->errors[] = 'Password needs at least one number';
+        }
+
+        if ($this->password != $this->password_confirmation) {
+            $this->errors[] = 'Password must match confirmation';
         }
     }
 

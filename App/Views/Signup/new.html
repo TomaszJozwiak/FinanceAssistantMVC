@@ -3,7 +3,6 @@
 {% block title %}Sign up{% endblock %}
 
 {% block footer %}
-    <script src="/js/hideShowPassword.min.js"></script>
 
     <script>
         /**
@@ -45,22 +44,16 @@
                         required: true,
                         minlength: 6,
                         validPassword: true
-                    }
+                    },
+                    password_confirmation: {
+                         equalTo: '#inputPassword'
+                     }
                 },
                 messages: {
                     email: {
                         remote: 'email already taken'
                     }
                 }
-            });
-
-
-            /**
-              * Show password toggle button
-              */
-            $('#inputPassword').hideShowPassword({
-                show: false,
-                innerToggle: 'focus'
             });
         });
     </script>
@@ -69,34 +62,71 @@
 
 {% block body %}
 
-    <h1>Sign up</h1>
+         <main>
+           <div class="container">
+              <div class="row text-center">
+                 <div class="col-sm-6 col-sm-offset-3">
+                    <article>
+                       <h1><b>Rejestracja</b></h1>
 
-    {% if user.errors is not empty %}
-        <p>Errors:</p>
-        <ul>
-            {% for error in user.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+                       <p>Wpisz poniższe dane, aby się zarejestrować</p><br />
 
-    <form method="post" action="/signup/create" id="formSignup">
 
-        <div>
-            <label for="inputName">Name</label>
-            <input id="inputName" name="name" placeholder="Name" autofocus value="{{ user.name }}" required />
-        </div>
-        <div>
-            <label for="inputEmail">Email address</label>
-            <input id="inputEmail" name="email" placeholder="email address" value="{{ user.email }}" required type="email" />
-        </div>
-        <div>
-            <label for="inputPassword">Password</label>
-            <input type="password" id="inputPassword" name="password" placeholder="Password" required />
-        </div>
+                            {% if user.errors is not empty %}
+                                   <p>Errors:</p>
+                                   <ul>
+                                       {% for error in user.errors %}
+                                           <li>{{ error }}</li>
+                                       {% endfor %}
+                                   </ul>
+                            {% endif %}
 
-        <button type="submit">Sign up</button>
+                               <form method="post" action="/signup/create" id="formSignup">
 
-    </form>
+    										<div class="form-group">
+    											<label for="inputName">Imię:</label>
+    											<div class="input-group">
+    												<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    												<input id="inputName" type="text" class="form-control" name="name" placeholder="Imię" autofocus value="{{ user.name }}" required />
+    											 </div>
+    										</div>
+    										<div class="form-group">
+    											<label for="inputEmail">Email:</label>
+    											<div class="input-group">
+    												<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+    												<input id="inputEmail" type="text" class="form-control" name="email" placeholder="Email" value="{{ user.email }}" required type="email" />
+    											 </div>
+    										</div>
+    										<div class="form-group">
+    											 <label for="inputPassword">Hasło:</label>
+    												<div class="input-group">
+    													<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+    													<input id="inputPassword" type="password" class="form-control" name="password" placeholder="Hasło" required />
+    												</div>
+    										</div>
+    										<div class="form-group">
+    											 <label for="inputPasswordConfirmation">Powtórz hasło:</label>
+    												<div class="input-group">
+    													<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+    													<input id="inputPasswordConfirmation" type="password" class="form-control" name="password_confirmation" placeholder="Powtórz hasło" required />
+    												</div>
+    										</div><br />
+
+    										<div class="form-group row d-inline-block">
+    											<div class="col-sm-6">
+    												<button type="submit" class="btn btn-success btn-block"><b><span class="glyphicon glyphicon-ok"></span> Zarejestruj</b></button>
+    											</div>
+    											<div class="col-sm-6">
+    												<a class="btn btn-danger btn-block" href="/index.php" role="button"><b><span class="glyphicon glyphicon-remove"></span> Cancel</b></a>
+    											</div>
+    										</div>
+
+    									</form><br />
+
+    							</article>
+    						</div>
+    					</div>
+    				</div>
+    			</main>
 
 {% endblock %}

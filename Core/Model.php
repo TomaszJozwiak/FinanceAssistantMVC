@@ -5,19 +5,8 @@ namespace Core;
 use PDO;
 use App\Config;
 
-/**
- * Base model
- *
- * PHP version 7.0
- */
 abstract class Model
 {
-
-    /**
-     * Get the PDO database connection
-     *
-     * @return mixed
-     */
     protected static function getDB()
     {
         static $db = null;
