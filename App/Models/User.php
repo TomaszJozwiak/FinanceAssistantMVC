@@ -51,7 +51,12 @@ class User extends \Core\Model
             $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
             $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
 
-            return $stmt->execute();
+            //return
+            if ($stmt->execute()){
+               $id = $this->findUserIdByEmail($this->email);
+               $this->copyNewUserData($id);
+               return true;
+            }
         }
 
         return false;
@@ -129,6 +134,21 @@ class User extends \Core\Model
         return $stmt->fetch();
     }
 
+    public static function findUserIdByEmail($email)
+    {
+        $sql = 'SELECT id FROM users WHERE email = :email';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $id = $row['id'];
+
+        return $id;
+    }
+
     /**
      * Authenticate a user by email and password.
      *
@@ -176,4 +196,74 @@ class User extends \Core\Model
 
         return $stmt->fetch();
     }
+
+
+   private function copyDefaultExpensesCategory($user_id)
+   {
+      $sql = 'SELECT * FROM expenses_category_default';
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+      $stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+         $name = $row['name'];
+         $category_name_query='INSERT INTO expenses_category_assigned_to_users (user_id, name)
+                               VALUES (:id, :name)';
+         $stmt2 = $db->prepare($category_name_query);
+         $stmt2->bindValue(':id', $user_id, PDO::PARAM_INT);
+         $stmt2->bindValue(':name', $name, PDO::PARAM_STR);
+
+         $stmt2->execute();
+      }
+   }
+
+   private function copyDefaultIncomesCategory($user_id)
+   {
+      $sql = 'SELECT * FROM incomes_category_default';
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+      $stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+         $name = $row['name'];
+         $category_name_query='INSERT INTO incomes_category_assigned_to_users (user_id, name)
+                               VALUES (:id, :name)';
+         $stmt2 = $db->prepare($category_name_query);
+         $stmt2->bindValue(':id', $user_id, PDO::PARAM_INT);
+         $stmt2->bindValue(':name', $name, PDO::PARAM_STR);
+
+         $stmt2->execute();
+      }
+   }
+
+   private function copyDefaultPaymentMethods($user_id)
+   {
+      $sql = 'SELECT * FROM payment_methods_default';
+
+      $db = static::getDB();
+      $stmt = $db->prepare($sql);
+      $stmt->execute();
+
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+         $name = $row['name'];
+         $method_name_query='INSERT INTO payment_methods_assigned_to_users (user_id, name)
+                               VALUES (:id, :name)';
+         $stmt2 = $db->prepare($method_name_query);
+         $stmt2->bindValue(':id', $user_id, PDO::PARAM_INT);
+         $stmt2->bindValue(':name', $name, PDO::PARAM_STR);
+
+         $stmt2->execute();
+      }
+   }
+
+   private function copyNewUserData($user_id)
+   {
+      $this->copyDefaultExpensesCategory($user_id);
+
+      $this->copyDefaultIncomesCategory($user_id);
+
+      $this->copyDefaultPaymentMethods($user_id);
+   }
 }
