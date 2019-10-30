@@ -122,7 +122,8 @@ button.navbar-toggle:hover
 
 .success
 {
-	color: #7FFF00;
+	background: rgba( 42, 248, 42, 0.5);
+	border-radius: 25px;
 }
 
 .failure

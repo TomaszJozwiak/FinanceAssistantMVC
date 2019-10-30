@@ -19,8 +19,7 @@ class Signup extends \Core\Controller
 
         if ($user->save()) {
 
-            $this->redirect('/signup/success')// naivgate to homepage.php
-            ;
+            $this->redirect('/signup/success');
 
         } else {
 

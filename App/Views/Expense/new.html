@@ -1,0 +1,81 @@
+{% extends 'loggedIn.html' %}
+
+{% block body %}
+
+<main>
+  <div class="container">
+     <div class="row text-center">
+        <div class="col-sm-6 col-sm-offset-3">
+           <article>
+              <h1><b>Dodaj wydatek</b></h1>
+
+              <p>Wpisz poniższe dane, aby dodać wydatek</p>
+
+              {% for message in flash_messages %}
+                 <div class="success">
+                    {{ message }}
+                 </div>
+              {% endfor %}
+
+              <br/>
+              <form method="post" action="/expense/create">
+
+                 <div class="form-group">
+                    <label for="amount">Kwota:</label>
+                    <div class="input-group">
+                       <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                       <input id="amount" type="number" step="0.01" class="form-control" name="amount" placeholder="Kwota" required>
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <label for="date">Data:</label>
+                       <div class="input-group">
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-hourglass" required></i></span>
+                          <input id="date" type="date" class="form-control" name="date" placeholder="Data">
+                       </div>
+                 </div>
+
+                 <div class="form-group">
+                    <label for="payment_method">Metoda płatności:</label>
+
+                    {% for methods in payment_method %}
+                         <div class="radio">
+                            <label><input type="radio" value="{{ methods.id }}" name="method" required>{{ methods.name }}</label>
+                         </div>
+                    {% endfor %}
+
+                 </div>
+
+                 <div class="form-group">
+                    <label for="selection_expense">Kategoria:</label>
+                    <select class="form-control" name="category">
+
+                       {% for categories in expense_categories %}
+                             <option value="{{ categories.id }}" required>{{ categories.name }}</option>
+                       {% endfor %}
+
+                    </select>
+                 </div>
+
+                 <div class="form-group">
+                    <label for="comment">Komentarz:</label>
+                    <textarea class="form-control" rows="3" id="comment" name="comment"></textarea>
+                 </div>
+
+                 <div class="form-group row d-inline-block">
+                    <div class="col-sm-6">
+                       <button type="submit" class="btn btn-success btn-block"><b><span class="glyphicon glyphicon-ok"></span> Dodaj</b></button>
+                    </div>
+                    <div class="col-sm-6">
+                       <a href="/expense/new" class="nounderline"><button type="button" class="btn btn-danger btn-block"><b><span class="glyphicon glyphicon-remove"></span> Cancel</b></button></a>
+                    </div>
+                 </div>
+              </form><br/>
+
+           </article>
+        </div>
+     </div>
+  </div>
+</main>
+
+{% endblock %}
