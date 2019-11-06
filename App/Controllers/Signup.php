@@ -30,11 +30,6 @@ class Signup extends \Core\Controller
         }
     }
 
-    /**
-     * Show the signup success page
-     *
-     * @return void
-     */
     public function successAction()
     {
         View::renderTemplate('/Signup/success.html');

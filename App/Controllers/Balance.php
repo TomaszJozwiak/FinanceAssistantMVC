@@ -78,7 +78,7 @@ class Balance extends Authenticated
 
     public function indexAction()
     {
-         View::renderTemplate('/Balance/index.php');
+         View::renderTemplate('/Balance/index.html');
     }
 
 }

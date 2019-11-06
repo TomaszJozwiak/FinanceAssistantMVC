@@ -5,11 +5,7 @@
 {% block footer %}
 
     <script>
-        /**
-         * Add jQuery Validation plugin method for a valid password
-         *
-         * Valid passwords contain at least one letter and one number.
-         */
+
         $.validator.addMethod('validPassword',
             function(value, element, param) {
 
@@ -24,7 +20,7 @@
 
                 return true;
             },
-            'Must contain at least one letter and one number'
+            'Hasło powinno posiadać co najmniej jedną literę oraz cyfrę'
         );
 
         $(document).ready(function() {
@@ -51,7 +47,7 @@
                 },
                 messages: {
                     email: {
-                        remote: 'email already taken'
+                        remote: 'Adres email zajęty'
                     }
                 }
             });

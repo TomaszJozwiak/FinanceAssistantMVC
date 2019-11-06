@@ -17,7 +17,6 @@ class Income extends Authenticated
 
     public function newAction()
     {
-
          View::renderTemplate('/Income/new.html');
     }
 
@@ -31,7 +30,6 @@ class Income extends Authenticated
             $this->redirect('/income/new');
 
          } else {
-
              View::renderTemplate('/Income/new.html');
          }
     }

@@ -158,7 +158,7 @@
                            type: "pie",
                            yValueFormatString: "#,##0.00\" PLN\"",
                            indexLabel: "{label} ({y})",
-                           dataPoints: '{{ dataChart }}'
+                           dataPoints: {{ dataChart|raw }}
                          }]
                   });
                   chart.render();

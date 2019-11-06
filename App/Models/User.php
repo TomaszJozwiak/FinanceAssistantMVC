@@ -7,20 +7,8 @@ use \App\Flash;
 
 class User extends \Core\Model
 {
-
-    /**
-     * Error messages
-     *
-     * @var array
-     */
     public $errors = [];
-    /**
-     * Class constructor
-     *
-     * @param array $data  Initial property values (optional)
-     *
-     * @return void
-     */
+
     public function __construct($data = [])
     {
         foreach ($data as $key => $value) {
@@ -28,11 +16,6 @@ class User extends \Core\Model
         };
     }
 
-    /**
-     * Save the user model with the current property values
-     *
-     * @return boolean  True if the user was saved, false otherwise
-     */
     public function save()
     {
         $this->validate();
@@ -51,7 +34,6 @@ class User extends \Core\Model
             $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
             $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
 
-            //return
             if ($stmt->execute()){
                $id = $this->findUserIdByEmail($this->email);
                $this->copyNewUserData($id);
@@ -62,63 +44,44 @@ class User extends \Core\Model
         return false;
     }
 
-    /**
-     * Validate current property values, adding valiation error messages to the errors array property
-     *
-     * @return void
-     */
     public function validate()
     {
         // Name
         if ($this->name == '') {
-            $this->errors[] = 'Name is required';
+            $this->errors[] = 'Nazwa jest wymagana';
         }
 
         // email address
         if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
-            $this->errors[] = 'Invalid email';
+            $this->errors[] = 'Niepoprawny email';
         }
         if (static::emailExists($this->email)) {
-            $this->errors[] = 'email already taken';
+            $this->errors[] = 'Adres email już istnieje';
         }
 
         // Password
         if (strlen($this->password) < 6) {
-            $this->errors[] = 'Please enter at least 6 characters for the password';
+            $this->errors[] = 'Hasło powinno mieć co najmniej 6 znaków';
         }
 
         if (preg_match('/.*[a-z]+.*/i', $this->password) == 0) {
-            $this->errors[] = 'Password needs at least one letter';
+            $this->errors[] = 'Hasło powinno mieć co najmniej jedną literę';
         }
 
         if (preg_match('/.*\d+.*/i', $this->password) == 0) {
-            $this->errors[] = 'Password needs at least one number';
+            $this->errors[] = 'Hasło powinno mieć co najmniej jedną cyfrę';
         }
 
         if ($this->password != $this->password_confirmation) {
-            $this->errors[] = 'Password must match confirmation';
+            $this->errors[] = 'Hasła muszą być zgodne';
         }
     }
 
-    /**
-     * See if a user record already exists with the specified email
-     *
-     * @param string $email email address to search for
-     *
-     * @return boolean  True if a record already exists with the specified email, false otherwise
-     */
     public static function emailExists($email)
     {
         return static::findByEmail($email) !== false;
     }
 
-    /**
-     * Find a user model by email address
-     *
-     * @param string $email email address to search for
-     *
-     * @return mixed User object if found, false otherwise
-     */
     public static function findByEmail($email)
     {
         $sql = 'SELECT * FROM users WHERE email = :email';
@@ -149,14 +112,6 @@ class User extends \Core\Model
         return $id;
     }
 
-    /**
-     * Authenticate a user by email and password.
-     *
-     * @param string $email email address
-     * @param string $password password
-     *
-     * @return mixed  The user object or false if authentication fails
-     */
     public static function authenticate($email, $password)
     {
         $user = static::findByEmail($email);
@@ -166,22 +121,15 @@ class User extends \Core\Model
                 return $user;
             }
 
-            Flash::addMessage('Incorrect Password');
+            Flash::addMessage('Niepoprawne hasło');
         }
         else {
-           Flash::addMessage('There is no account for that email address');
+           Flash::addMessage('Nie ma konta na podany adres email');
         }
 
         return false;
     }
 
-    /**
-     * Find a user model by ID
-     *
-     * @param string $id The user ID
-     *
-     * @return mixed User object if found, false otherwise
-     */
     public static function findByID($id)
     {
         $sql = 'SELECT * FROM users WHERE id = :id';

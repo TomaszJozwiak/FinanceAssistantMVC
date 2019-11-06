@@ -7,10 +7,10 @@ use PDO;
 class BalanceModel extends \Core\Model
 
 {
-   public static $balance = 0;
-   public static $array_category = [];
-   public static $array_category_amount = [];
-   public static $category_counter = 0;
+   private static $balance = 0;
+   private static $array_category = [];
+   private static $array_category_amount = [];
+   private static $category_counter = 0;
 
     public function __construct($data = [])
     {
@@ -51,7 +51,7 @@ class BalanceModel extends \Core\Model
       return $chosen_date;
     }
 
-    public static function checkDates($DBdate){
+    private static function checkDates($DBdate){
       $chosen_date = BalanceModel::getDatePeriod();
 
       if ($chosen_date == "date_period")
@@ -94,7 +94,7 @@ class BalanceModel extends \Core\Model
          }
       }
 
-      public static function categoryExpensesCalculator($category, $amount)
+      private static function categoryExpensesCalculator($category, $amount)
       {
             $category_exist = false;
 
@@ -254,29 +254,29 @@ class BalanceModel extends \Core\Model
          return BalanceModel::prepareExpenseArray($stmt);
       }
 
-      public static function getBalance()
-       {
-         return BalanceModel::$balance;
-       }
+   public static function getBalance()
+    {
+      return BalanceModel::$balance;
+    }
 
-       public static function getCategoryCounter()
-        {
-          return BalanceModel::$category_counter;
-        }
+    public static function getCategoryCounter()
+     {
+       return BalanceModel::$category_counter;
+     }
 
-      public static function getDataToChart(){
-         $data_points = array();
-			$k = 0;
+    public static function getDataToChart()
+    {
+        $data_points = array();
+		  $k = 0;
 
-			while ($k < BalanceModel::$category_counter)
-			{
-				$point = array("label" => BalanceModel::$array_category[$k] , "y" => BalanceModel::$array_category_amount[$k]);
-				array_push($data_points, $point);
-				$k++;
-			}
-         $data_points = json_encode($data_points, JSON_NUMERIC_CHECK);
+	     while ($k < BalanceModel::$category_counter)
+   		{
+   			$point = array("label" => BalanceModel::$array_category[$k] , "y" => BalanceModel::$array_category_amount[$k]);
+   			array_push($data_points, $point);
+   			$k++;
+   		}
+        $data_points = json_encode($data_points, JSON_NUMERIC_CHECK);
 
-         return $data_points;
-       }
-
+        return $data_points;
+    }
 }
