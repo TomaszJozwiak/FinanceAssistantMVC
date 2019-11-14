@@ -145,27 +145,31 @@
                   <div style="color: red; font-size: 25px;"><b>Czas zacząć oszczędzać</b></div>
             {% endif %}
 
-            <script>
-               window.onload = function()
-               {
-                  var chart = new CanvasJS.Chart("chartContainer",
-                  {
-                        animationEnabled: true,
-                        title: {
-                           text: "Kategorie wydatków"
-                        },
-                        data: [{
-                           type: "pie",
-                           yValueFormatString: "#,##0.00\" PLN\"",
-                           indexLabel: "{label} ({y})",
-                           dataPoints: {{ dataChart|raw }}
-                         }]
-                  });
-                  chart.render();
-               }
-            </script>
+            {% if categoryCounter != 0 %}
 
-            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+               <script>
+                  window.onload = function()
+                  {
+                     var chart = new CanvasJS.Chart("chartContainer",
+                     {
+                           animationEnabled: true,
+                           title: {
+                              text: "Kategorie wydatków"
+                           },
+                           data: [{
+                              type: "pie",
+                              yValueFormatString: "#,##0.00\" PLN\"",
+                              indexLabel: "{label} ({y})",
+                              dataPoints: {{ dataChart|raw }}
+                            }]
+                     });
+                     chart.render();
+                  }
+               </script>
+
+               <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+            {% endif %}
 
           </div>
        </div>

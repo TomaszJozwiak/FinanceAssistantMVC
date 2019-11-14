@@ -21,17 +21,17 @@
                  <form method="post" action="/income/create">
 
                     <div class="form-group">
-                       <label for="kwota">Kwota:</label>
+                       <label for="amount">Kwota:</label>
                        <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
                           <input id="amount" type="number" step="0.01" class="form-control" name="amount" placeholder="Kwota" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="data">Data:</label>
+                        <label for="date">Data:</label>
                           <div class="input-group">
                              <span class="input-group-addon"><i class="glyphicon glyphicon-hourglass"></i></span>
-                             <input id="date" type="date" class="form-control" name="date" placeholder="Data" required>
+                             <input id="date" type="date" class="form-control" name="date" placeholder="Data" value="{{ todaysDate }}" required>
                           </div>
                     </div>
 
