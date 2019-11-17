@@ -80,7 +80,4 @@ class Balance extends Authenticated
     {
          View::renderTemplate('/Balance/index.html');
     }
-
-
-
 }
