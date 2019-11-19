@@ -5,6 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\User;
 use \App\Models\SettingsModel;
+use \App\Auth;
 use \App\Flash;
 
 class Settings extends Authenticated
@@ -14,7 +15,7 @@ class Settings extends Authenticated
         View::renderTemplate('/Settings/index.html');
     }
 
-    public function editIncomeCategoryAction()
+    public function editIncomeCategory()
     {
          if (isset($_SESSION['user_id'])) {
              $settingsModel = new SettingsModel($_POST);
@@ -24,7 +25,7 @@ class Settings extends Authenticated
          }
     }
 
-    public function deleteIncomeCategoryAction()
+    public function deleteIncomeCategory()
      {
            if (isset($_SESSION['user_id'])) {
               $settingsModel = new SettingsModel($_POST);
@@ -35,7 +36,7 @@ class Settings extends Authenticated
            }
      }
 
-     public function addIncomeCategoryAction()
+     public function addIncomeCategory()
     {
          if (isset($_SESSION['user_id'])) {
               $settingsModel = new SettingsModel($_POST);
@@ -45,7 +46,7 @@ class Settings extends Authenticated
          }
     }
 
-    public function editExpenseCategoryAction()
+    public function editExpenseCategory()
    {
          if (isset($_SESSION['user_id'])) {
              $settingsModel = new SettingsModel($_POST);
@@ -55,7 +56,7 @@ class Settings extends Authenticated
          }
    }
 
-   public function deleteExpenseCategoryAction()
+   public function deleteExpenseCategory()
    {
         if (isset($_SESSION['user_id'])) {
            $settingsModel = new SettingsModel($_POST);
@@ -66,7 +67,7 @@ class Settings extends Authenticated
         }
    }
 
-   public function addExpenseCategoryAction()
+   public function addExpenseCategory()
    {
       if (isset($_SESSION['user_id'])) {
            $settingsModel = new SettingsModel($_POST);
@@ -76,7 +77,7 @@ class Settings extends Authenticated
       }
    }
 
-   public function editPaymentMethodsAction()
+   public function editPaymentMethods()
   {
         if (isset($_SESSION['user_id'])) {
             $settingsModel = new SettingsModel($_POST);
@@ -86,7 +87,7 @@ class Settings extends Authenticated
         }
   }
 
-  public function deletePaymentMethodAction()
+  public function deletePaymentMethod()
   {
       if (isset($_SESSION['user_id'])) {
           $settingsModel = new SettingsModel($_POST);
@@ -97,7 +98,7 @@ class Settings extends Authenticated
       }
   }
 
-  public function addPaymentMethodAction()
+  public function addPaymentMethod()
   {
      if (isset($_SESSION['user_id'])) {
           $settingsModel = new SettingsModel($_POST);
@@ -106,5 +107,43 @@ class Settings extends Authenticated
           View::renderTemplate('/Settings/index.html');
      }
   }
+
+  public function changeUsername()
+  {
+     if (isset($_SESSION['user_id'])) {
+          $settingsModel = new SettingsModel($_POST);
+          $settingsModel->changeUsername($_SESSION['user_id']);
+          Flash::addMessage('Nazwa użytkownika została zmieniona');
+          View::renderTemplate('/Settings/index.html');
+     }
+  }
+
+  public function editPassword()
+  {
+     if (isset($_SESSION['user_id'])) {
+          $settingsModel = new SettingsModel($_POST);
+
+          if ($settingsModel->editPassword($_SESSION['user_id'])){
+          Flash::addMessage('Hasło zostało zmienione');
+         }
+
+          View::renderTemplate('/Settings/index.html');
+     }
+  }
+
+  public function deleteUserAction()
+  {
+     if (isset($_SESSION['user_id'])) {
+          $settingsModel = new SettingsModel($_POST);
+          $settingsModel->deleteUser($_SESSION['user_id']);
+          Auth::logout();
+          Flash::addMessage('Konto zostało usunięte');
+          View::renderTemplate('Home/index.html');
+     }
+  }
+
+
+
+
 
 }
