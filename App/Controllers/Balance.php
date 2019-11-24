@@ -80,4 +80,44 @@ class Balance extends Authenticated
     {
          View::renderTemplate('/Balance/index.html');
     }
+
+    public function editSingleIncome()
+    {
+         if (isset($_SESSION['user_id'])) {
+             $balanceModel = new BalanceModel($_POST);
+             $balanceModel->editSingleIncome();
+             Flash::addMessage('Edycja zakończona sukcesem');
+             View::renderTemplate('/Balance/index.html');
+         }
+    }
+
+   public function deleteSingleIncome()
+   {
+        if (isset($_SESSION['user_id'])) {
+            $balanceModel = new BalanceModel($_POST);
+            $balanceModel->deleteSingleIncome();
+            Flash::addMessage('Przychód usunięty');
+            View::renderTemplate('/Balance/index.html');
+        }
+   }
+
+   public function editSingleExpense()
+   {
+        if (isset($_SESSION['user_id'])) {
+           $balanceModel = new BalanceModel($_POST);
+           $balanceModel->editSingleExpense();
+           Flash::addMessage('Edycja zakończona sukcesem');
+           View::renderTemplate('/Balance/index.html');
+        }
+   }
+
+   public function deleteSingleExpense()
+   {
+        if (isset($_SESSION['user_id'])) {
+            $balanceModel = new BalanceModel($_POST);
+            $balanceModel->deleteSingleExpense();
+            Flash::addMessage('Wydatek usunięty');
+            View::renderTemplate('/Balance/index.html');
+        }
+   }
 }

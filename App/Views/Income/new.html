@@ -40,10 +40,10 @@
 
                        {% for categories in income_categories %}
                              <div class="radio">
-                             <label><input type="radio" value="{{ categories.id }}" name="category" required>{{ categories.name }} </label>
+                             <label><input type="radio" value="{{ categories[0] }}" name="category" required>{{ categories[1] }} </label>
                              </div>
                        {% endfor %}
-
+                    </div>
                     <div class="form-group">
                        <label for="comment">Komentarz:</label>
                        <textarea class="form-control" rows="3" id="comment" name="comment"></textarea>

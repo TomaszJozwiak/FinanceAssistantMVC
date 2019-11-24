@@ -13,6 +13,27 @@ class IncomeModel extends \Core\Model
         };
     }
 
+    private static function prepareIncomeCategoriesArray($object)
+   {
+      $array_category = [];
+
+      $row_number = $object->rowCount();
+
+      $i = 1;
+      while($i <= $row_number)
+      {
+           $single_row = $object->fetch(PDO::FETCH_ASSOC);
+
+           $id = $single_row['id'];
+           $name = $single_row['name'];
+
+           array_push($array_category, [$id, $name]);
+
+           $i++;
+        }
+        return $array_category;
+   }
+
     public static function getIncomeCategories($id)
     {
         $sql = 'SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id = :id';
@@ -23,7 +44,7 @@ class IncomeModel extends \Core\Model
 
         $stmt->execute();
 
-        return $stmt;
+        return IncomeModel::prepareIncomeCategoriesArray($stmt);
     }
 
     public function saveIncome()

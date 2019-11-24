@@ -63,6 +63,12 @@
 
            <h1><b>Bilans </b></h1>
 
+           {% for message in flash_messages %}
+             <div class="success">
+                 {{ message }}
+             </div><br/>
+           {% endfor %}
+
            Okres:
 
            {% if choosenDatePeriod == 'current_month' %}
@@ -99,10 +105,109 @@
    					</div>
 
    					<div class="col-sm-1" style="margin-top: 15px;">
-   						<span class="glyphicon glyphicon-pencil"></span>
-   						<span class="glyphicon glyphicon-trash"></span>
+                     <a href="#edit_single_income_{{ income[4] }}" data-toggle="modal">
+                        <div>
+                            <span class="glyphicon glyphicon-pencil">
+                        </div>
+                     </a>
+                     <a href="#delete_single_income_{{ income[4] }}" data-toggle="modal">
+                        <div>
+                           <span class="glyphicon glyphicon-trash">
+                        </div>
+                     </a>
    					</div>
    				</div>
+
+
+               <div class="modal fade" id="edit_single_income_{{ income[4] }}" tabindex="-1" role="dialog" aria-labelledby="edit_single_income_{{ income[4] }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+
+                    <div class="modal-content">
+
+                       <div class="modal-header">
+                              <h2 class="modal-title" id="edit_single_income_{{ income[4] }}">Edytowanie przychodu</h2>
+                       </div>
+
+                       <form method="POST" action="/balance/editSingleIncome">
+                          <div class="modal-body">
+
+                             <div class="form-group">
+                                <div class="input-group">
+                                   <input id="singleIncomeId" type="hidden" class="form-control" name="singleIncomeId" value="{{ income[4] }}">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                               <label for="amount">Kwota:</label>
+                               <div class="input-group">
+                                 <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                 <input id="amount" type="number" step="0.01" class="form-control" name="amount" placeholder="Kwota" value="{{ income[0] }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Data:</label>
+                                 <div class="input-group">
+                                     <span class="input-group-addon"><i class="glyphicon glyphicon-hourglass"></i></span>
+                                     <input id="date" type="date" class="form-control" name="date" placeholder="Data" value="{{ income[2] }}" required>
+                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                               <label for="payment_method">Kategoria:</label>
+                               {% for categories in income_categories %}
+                                  {% if categories[1] == income[1] %}
+                                     <div class="radio">
+                                     <label><input type="radio" value="{{ categories[0] }}" name="category" checked required>{{ categories[1] }} </label>
+                                     </div>
+                                  {% else %}
+                                     <div class="radio">
+                                     <label><input type="radio" value="{{ categories[0] }}" name="category" required>{{ categories[1] }} </label>
+                                     </div>
+                                  {% endif %}
+                               {% endfor %}
+
+                            </div>
+                            <div class="form-group">
+                               <label for="comment">Komentarz:</label>
+                               <textarea class="form-control" rows="3" id="comment" name="comment">{{ income[3] }}</textarea>
+                            </div>
+
+                              <button type="submit" class="btn btn-success">Tak</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Nie</button>
+
+                          </div>
+                       </form>
+                    </div>
+                </div>
+               </div>
+
+
+               <div class="modal fade" id="delete_single_income_{{ income[4] }}" tabindex="-1" role="dialog" aria-labelledby="delete_single_income_{{ income[4] }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+
+                    <div class="modal-content">
+
+                       <div class="modal-header">
+                              <h2 class="modal-title" id="delete_single_income_{{ income[4] }}">Usuwanie przychodu</h2>
+                       </div>
+
+                       Czy jesteś pewny, że chcesz usunąć ten przychód?
+
+                       <form method="POST" action="/balance/deleteSingleIncome">
+                          <div class="modal-body">
+                              <div class="form-group">
+                                 <div class="input-group">
+                                    <input id="singleIncomeId" type="hidden" class="form-control" name="singleIncomeId" value="{{ income[4] }}">
+                                 </div>
+                              </div>
+                              <button type="submit" class="btn btn-success">Tak</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Nie</button>
+                          </div>
+                       </form>
+
+                    </div>
+                </div>
+               </div>
+
            {% endfor %}
 
 
@@ -131,11 +236,126 @@
    					<div style="font-size: 18px;">{{ expense[3] }}</div>
    				</div>
 
-   				<div class="col-sm-1" style="margin-top: 15px;">
-   					<span class="glyphicon glyphicon-pencil"></span>
-   					<span class="glyphicon glyphicon-trash"></span>
-   				</div>
+               <div class="col-sm-1" style="margin-top: 15px;">
+                  <a href="#edit_single_expense_{{ expense[5] }}" data-toggle="modal">
+                     <div>
+                         <span class="glyphicon glyphicon-pencil">
+                     </div>
+                  </a>
+                  <a href="#delete_single_expense_{{ expense[5] }}" data-toggle="modal">
+                     <div>
+                        <span class="glyphicon glyphicon-trash">
+                     </div>
+                  </a>
+               </div>
    			</div>
+
+
+            <div class="modal fade" id="edit_single_expense_{{ expense[5] }}" tabindex="-1" role="dialog" aria-labelledby="edit_single_expense_{{ expense[5] }}" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+
+                 <div class="modal-content">
+
+                    <div class="modal-header">
+                           <h2 class="modal-title" id="edit_single_expense_{{ expense[5] }}">Edytowanie wydatku</h2>
+                    </div>
+
+                    <form method="POST" action="/balance/editSingleExpense">
+                       <div class="modal-body">
+
+                          <div class="form-group">
+                             <div class="input-group">
+                                <input id="singleExpenseId" type="hidden" class="form-control" name="singleExpenseId" value="{{ expense[5] }}">
+                             </div>
+                          </div>
+                          <div class="form-group">
+                             <label for="amount">Kwota:</label>
+                             <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="amount" type="number" step="0.01" class="form-control" name="amount" placeholder="Kwota" value="{{ expense[0] }}" required>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="date">Data:</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon"><i class="glyphicon glyphicon-hourglass" ></i></span>
+                                  <input id="date" type="date" class="form-control" name="date" placeholder="Data" value="{{ expense[3] }}" required>
+                                </div>
+                          </div>
+
+                          <div class="form-group">
+                             <label for="payment_method">Metoda płatności:</label>
+
+                             {% for methods in payment_method %}
+                                {% if methods[1] == expense[2] %}
+                                <div class="radio">
+                                   <label><input type="radio" value="{{ methods[0] }}" name="method" checked required>{{ methods[1] }}</label>
+                                </div>
+                                {% else %}
+                                <div class="radio">
+                                   <label><input type="radio" value="{{ methods[0] }}" name="method" required>{{ methods[1] }}</label>
+                                </div>
+                                {% endif %}
+                             {% endfor %}
+
+                          </div>
+
+                          <div class="form-group">
+                             <label for="selection_expense">Kategoria:</label>
+                             <select class="form-control" name="category">
+
+                                {% for categories in expense_categories %}
+                                   {% if categories[1] == expense[1] %}
+                                       <option value="{{ categories[0] }}" selected required>{{ categories[1] }}</option>
+                                   {% else %}
+                                       <option value="{{ categories[0] }}" required>{{ categories[1] }}</option>
+                                   {% endif %}
+                                {% endfor %}
+
+                             </select>
+                          </div>
+
+                          <div class="form-group">
+                             <label for="comment">Komentarz:</label>
+                             <textarea class="form-control" rows="3" id="comment" name="comment"> {{ expense[4] }}</textarea>
+                          </div>
+
+                           <button type="submit" class="btn btn-success">Tak</button>
+                           <button type="button" class="btn btn-danger" data-dismiss="modal">Nie</button>
+
+                       </div>
+                    </form>
+                 </div>
+             </div>
+            </div>
+
+            <div class="modal fade" id="delete_single_expense_{{ expense[5] }}" tabindex="-1" role="dialog" aria-labelledby="delete_single_expense_{{ expense[5] }}" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+
+                 <div class="modal-content">
+
+                    <div class="modal-header">
+                           <h2 class="modal-title" id="delete_single_expense_{{ expense[5] }}">Usuwanie wydatku</h2>
+                    </div>
+
+                    Czy jesteś pewny, że chcesz usunąć ten wydatek?
+
+                    <form method="POST" action="/balance/deleteSingleExpense">
+                       <div class="modal-body">
+                           <div class="form-group">
+                              <div class="input-group">
+                                 <input id="singleExpenseId" type="hidden" class="form-control" name="singleExpenseId" value="{{ expense[5] }}">
+                              </div>
+                           </div>
+                           <button type="submit" class="btn btn-success">Tak</button>
+                           <button type="button" class="btn btn-danger" data-dismiss="modal">Nie</button>
+                       </div>
+                    </form>
+
+                 </div>
+             </div>
+            </div>
+
           {% endfor %}
 
 				<br/> Bilans za wybrany okres wynosi: <b>{{ balance }}</b><br/>

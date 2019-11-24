@@ -133,15 +133,16 @@ class BalanceModel extends \Core\Model
        while($i <= $row_number)
        {
            $single_row = $object->fetch(PDO::FETCH_ASSOC);
-           $date_of_income=$single_row['date_of_income'];
+           $date_of_income = $single_row['date_of_income'];
            if (BalanceModel::checkDates($date_of_income))
            {
-              $amount=$single_row['amount'];
-              $category_id=$single_row['income_category_assigned_to_user_id'];
+              $amount = $single_row['amount'];
+              $category_id = $single_row['income_category_assigned_to_user_id'];
               $category = BalanceModel::getIncomeCategoryNameFromId($category_id);
-              $comment=$single_row['income_comment'];
+              $comment = $single_row['income_comment'];
+              $income_id = $single_row['id'];
 
-              array_push($array_category, [$amount, $category, $date_of_income, $comment]);
+              array_push($array_category, [$amount, $category, $date_of_income, $comment, $income_id]);
 
               BalanceModel::$balance = BalanceModel::$balance + $amount;
            }
@@ -228,9 +229,9 @@ class BalanceModel extends \Core\Model
               $payment_method_id = $single_row['payment_method_assigned_to_user_id'];
               $method = BalanceModel::getExpensePaymentMethodNameFromId($payment_method_id);
 
-              $comment=$single_row['expense_comment'];
-
-              array_push($array_category, [$amount, $category, $method, $date_of_expense, $comment]);
+              $comment = $single_row['expense_comment'];
+              $expense_id = $single_row['id'];
+              array_push($array_category, [$amount, $category, $method, $date_of_expense, $comment, $expense_id]);
 
               BalanceModel::$balance = BalanceModel::$balance - $amount;
               BalanceModel::categoryExpensesCalculator($category, $amount);
@@ -279,4 +280,69 @@ class BalanceModel extends \Core\Model
 
         return $data_points;
     }
+
+    public function editSingleIncome()
+   {
+       $user_id = $_SESSION['user_id'];
+
+       $sql = 'UPDATE incomes
+               SET user_id = :user_id, income_category_assigned_to_user_id = :category_id, amount = :amount, date_of_income = :income_date, income_comment = :comment
+               WHERE id = :singleIncomeId';
+
+       $db = static::getDB();
+       $stmt = $db->prepare($sql);
+
+       $stmt->bindValue(':singleIncomeId', $this->singleIncomeId, PDO::PARAM_INT);
+       $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+       $stmt->bindValue(':category_id', $this->category, PDO::PARAM_INT);
+       $stmt->bindValue(':amount', $this->amount);
+       $stmt->bindValue(':income_date', $this->date);
+       $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
+
+       $stmt->execute();
+   }
+
+    public function deleteSingleIncome()
+    {
+       $sql = 'DELETE FROM incomes WHERE id = :singleIncomeId';
+
+       $db = static::getDB();
+       $stmt = $db->prepare($sql);
+       $stmt->bindValue(':singleIncomeId', $this->singleIncomeId, PDO::PARAM_STR);
+
+       $stmt->execute();
+     }
+
+     public function editSingleExpense()
+    {
+        $user_id = $_SESSION['user_id'];
+
+        $sql = 'UPDATE expenses
+                SET user_id = :user_id, expense_category_assigned_to_user_id = :category_id, payment_method_assigned_to_user_id = :payment_method, amount = :amount, date_of_expense = :expense_date, expense_comment = :comment
+                WHERE id = :singleExpenseId';
+
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':singleExpenseId', $this->singleExpenseId, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':category_id', $this->category, PDO::PARAM_INT);
+        $stmt->bindValue(':payment_method', $this->method, PDO::PARAM_INT);
+        $stmt->bindValue(':amount', $this->amount);
+        $stmt->bindValue(':expense_date', $this->date);
+        $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
+
+        $stmt->execute();
+    }
+
+    public function deleteSingleExpense()
+    {
+       $sql = 'DELETE FROM expenses WHERE id = :singleExpenseId';
+
+       $db = static::getDB();
+       $stmt = $db->prepare($sql);
+       $stmt->bindValue(':singleExpenseId', $this->singleExpenseId, PDO::PARAM_STR);
+
+       $stmt->execute();
+   }
 }

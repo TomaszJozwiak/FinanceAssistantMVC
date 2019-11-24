@@ -30,8 +30,8 @@
                  <div class="form-group">
                      <label for="date">Data:</label>
                        <div class="input-group">
-                          <span class="input-group-addon"><i class="glyphicon glyphicon-hourglass" required></i></span>
-                          <input id="date" type="date" class="form-control" name="date" placeholder="Data">
+                          <span class="input-group-addon"><i class="glyphicon glyphicon-hourglass"></i></span>
+                          <input id="date" type="date" class="form-control" name="date" placeholder="Data" required>
                        </div>
                  </div>
 
@@ -40,7 +40,7 @@
 
                     {% for methods in payment_method %}
                          <div class="radio">
-                            <label><input type="radio" value="{{ methods.id }}" name="method" required>{{ methods.name }}</label>
+                            <label><input type="radio" value="{{ methods[0] }}" name="method" required>{{ methods[1] }}</label>
                          </div>
                     {% endfor %}
 
@@ -51,7 +51,7 @@
                     <select class="form-control" name="category">
 
                        {% for categories in expense_categories %}
-                             <option value="{{ categories.id }}" required>{{ categories.name }}</option>
+                             <option value="{{ categories[0] }}" required>{{ categories[1] }}</option>
                        {% endfor %}
 
                     </select>

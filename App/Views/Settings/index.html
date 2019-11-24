@@ -66,25 +66,25 @@
                  {% for categories in income_categories %}
                  <div style="padding: 30px;">
                        <div class="col-sm-6">
-                          {{ categories.name }}
+                          {{ categories[1] }}
                        </div>
                         <div class="col-sm-6">
                            <div class="col-sm-6">
-                                <button type="button" class="btn btn-primary btn-block" href="#edit_income_category_{{ categories.id }}" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span> Edytuj</button>
+                                <button type="button" class="btn btn-primary btn-block" href="#edit_income_category_{{ categories[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span> Edytuj</button>
                              </div>
                              <div class="col-sm-6">
-                                <button type="button" class="btn btn-danger btn-block" href="#delete_income_category_{{ categories.id }}" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
+                                <button type="button" class="btn btn-danger btn-block" href="#delete_income_category_{{ categories[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
                              </div>
                         </div>
                      </div>
 
-                     <div class="modal fade" id="edit_income_category_{{ categories.id }}" tabindex="-1" role="dialog" aria-labelledby="edit_income_category_{{ categories.id }}" aria-hidden="true">
+                     <div class="modal fade" id="edit_income_category_{{ categories[0] }}" tabindex="-1" role="dialog" aria-labelledby="edit_income_category_{{ categories[0] }}" aria-hidden="true">
                       <div class="modal-dialog" role="document">
 
                           <div class="modal-content">
 
                              <div class="modal-header">
-                                   <h2 class="modal-title" id="edit_income_category_{{ categories.id }}">Edycja katerogii przychodu</h2>
+                                   <h2 class="modal-title" id="edit_income_category_{{ categories[0] }}">Edycja katerogii przychodu</h2>
                              </div>
 
                              Aby zmienić nazwę kategorii, wypełnij poniższe pole
@@ -94,7 +94,7 @@
 
                                    <div class="form-group">
                                       <div class="input-group">
-                                         <input id="incomeCategoryName" type="hidden" class="form-control" name="incomeCategoryName" value="{{ categories.name }}">
+                                         <input id="incomeCategoryName" type="hidden" class="form-control" name="incomeCategoryName" value="{{ categories[1] }}">
                                       </div>
                                    </div>
 
@@ -102,7 +102,7 @@
                                     <label for="inputNewIncomeCategory">Nowa nazwa kategorii:</label>
                                     <div class="input-group">
                                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                                       <input id="inputNewIncomeCategory" type="text" class="form-control" name="inputNewIncomeCategory" placeholder="Nowa nazwa" value="{{ categories.name }}" required />
+                                       <input id="inputNewIncomeCategory" type="text" class="form-control" name="inputNewIncomeCategory" placeholder="Nowa nazwa" value="{{ categories[1] }}" required />
                                     </div>
                                  </div>
 
@@ -115,22 +115,22 @@
                       </div>
                     </div>
 
-                    <div class="modal fade" id="delete_income_category_{{ categories.id }}" tabindex="-1" role="dialog" aria-labelledby="delete_income_category_{{ categories.id }}" aria-hidden="true">
+                    <div class="modal fade" id="delete_income_category_{{ categories[0] }}" tabindex="-1" role="dialog" aria-labelledby="delete_income_category_{{ categories[0] }}" aria-hidden="true">
                       <div class="modal-dialog" role="document">
 
                           <div class="modal-content">
 
                              <div class="modal-header">
-                                   <h2 class="modal-title" id="delete_income_category_{{ categories.id }}">Usuwanie katerogii przychodu</h2>
+                                   <h2 class="modal-title" id="delete_income_category_{{ categories[0] }}">Usuwanie katerogii przychodu</h2>
                              </div>
 
-                             Czy jesteś pewny, że chcesz usunąć kategorię - {{ categories.name }}?
+                             Czy jesteś pewny, że chcesz usunąć kategorię - {{ categories[1] }}?
 
                              <form method="POST" action="/settings/deleteIncomeCategory">
                                 <div class="modal-body">
                                    <div class="form-group">
                                       <div class="input-group">
-                                         <input id="incomeCategoryId" type="hidden" class="form-control" name="incomeCategoryId" value="{{ categories.id }}">
+                                         <input id="incomeCategoryId" type="hidden" class="form-control" name="incomeCategoryId" value="{{ categories[0] }}">
                                       </div>
                                    </div>
                                    <button type="submit" class="btn btn-success">Tak</button>
@@ -186,25 +186,25 @@
                  {% for categories in expense_categories %}
                  <div style="padding: 30px;">
                        <div class="col-sm-6">
-                          {{ categories.name }}
+                          {{ categories[1] }}
                        </div>
                         <div class="col-sm-6">
                            <div class="col-sm-6">
-                                <button type="button" class="btn btn-primary btn-block" href="#edit_expense_category_{{ categories.id }}" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span> Edytuj</button>
+                                <button type="button" class="btn btn-primary btn-block" href="#edit_expense_category_{{ categories[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span> Edytuj</button>
                              </div>
                              <div class="col-sm-6">
-                                <button type="button" class="btn btn-danger btn-block" href="#delete_expense_category_{{ categories.id }}" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
+                                <button type="button" class="btn btn-danger btn-block" href="#delete_expense_category_{{ categories[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
                              </div>
                         </div>
                      </div>
 
-                     <div class="modal fade" id="edit_expense_category_{{ categories.id }}" tabindex="-1" role="dialog" aria-labelledby="edit_expense_category_{{ categories.id }}" aria-hidden="true">
+                     <div class="modal fade" id="edit_expense_category_{{ categories[0] }}" tabindex="-1" role="dialog" aria-labelledby="edit_expense_category_{{ categories[0] }}" aria-hidden="true">
                       <div class="modal-dialog" role="document">
 
                           <div class="modal-content">
 
                              <div class="modal-header">
-                                   <h2 class="modal-title" id="edit_expense_category_{{ categories.id }}">Edycja katerogii wydatków</h2>
+                                   <h2 class="modal-title" id="edit_expense_category_{{ categories[0] }}">Edycja katerogii wydatków</h2>
                              </div>
 
                              Aby zmienić nazwę kategorii, wypełnij poniższe pole
@@ -214,7 +214,7 @@
 
                                    <div class="form-group">
                                       <div class="input-group">
-                                         <input id="expenseCategoryName" type="hidden" class="form-control" name="expenseCategoryName" value="{{ categories.name }}">
+                                         <input id="expenseCategoryName" type="hidden" class="form-control" name="expenseCategoryName" value="{{ categories[1] }}">
                                       </div>
                                    </div>
 
@@ -222,7 +222,7 @@
                                     <label for="inputNewExpenseCategory">Nowa nazwa kategorii:</label>
                                     <div class="input-group">
                                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                                       <input id="inputNewExpenseCategory" type="text" class="form-control" name="inputNewExpenseCategory" placeholder="Nowa nazwa" value="{{ categories.name }}" required />
+                                       <input id="inputNewExpenseCategory" type="text" class="form-control" name="inputNewExpenseCategory" placeholder="Nowa nazwa" value="{{ categories[1] }}" required />
                                     </div>
                                  </div>
 
@@ -235,22 +235,22 @@
                       </div>
                     </div>
 
-                    <div class="modal fade" id="delete_expense_category_{{ categories.id }}" tabindex="-1" role="dialog" aria-labelledby="delete_expense_category_{{ categories.id }}" aria-hidden="true">
+                    <div class="modal fade" id="delete_expense_category_{{ categories[0] }}" tabindex="-1" role="dialog" aria-labelledby="delete_expense_category_{{ categories[0] }}" aria-hidden="true">
                       <div class="modal-dialog" role="document">
 
                           <div class="modal-content">
 
                              <div class="modal-header">
-                                   <h2 class="modal-title" id="delete_expense_category_{{ categories.id }}">Usuwanie katerogii wydatków</h2>
+                                   <h2 class="modal-title" id="delete_expense_category_{{ categories[0] }}">Usuwanie katerogii wydatków</h2>
                              </div>
 
-                             Czy jesteś pewny, że chcesz usunąć kategorię - {{ categories.name }}?
+                             Czy jesteś pewny, że chcesz usunąć kategorię - {{ categories[1] }}?
 
                              <form method="POST" action="/settings/deleteExpenseCategory">
                                 <div class="modal-body">
                                    <div class="form-group">
                                       <div class="input-group">
-                                         <input id="expenseCategoryId" type="hidden" class="form-control" name="expenseCategoryId" value="{{ categories.id }}">
+                                         <input id="expenseCategoryId" type="hidden" class="form-control" name="expenseCategoryId" value="{{ categories[0] }}">
                                       </div>
                                    </div>
                                    <button type="submit" class="btn btn-success">Tak</button>
@@ -307,25 +307,25 @@
                  {% for method in payment_method %}
                  <div style="padding: 30px;">
                        <div class="col-sm-6">
-                          {{ method.name }}
+                          {{ method[1] }}
                        </div>
                         <div class="col-sm-6">
                            <div class="col-sm-6">
-                                <button type="button" class="btn btn-primary btn-block" href="#edit_payment_method_{{ method.id }}" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span> Edytuj</button>
+                                <button type="button" class="btn btn-primary btn-block" href="#edit_payment_method_{{ method[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span> Edytuj</button>
                              </div>
                              <div class="col-sm-6">
-                                <button type="button" class="btn btn-danger btn-block" href="#delete_payment_method_{{ method.id }}" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
+                                <button type="button" class="btn btn-danger btn-block" href="#delete_payment_method_{{ method[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
                              </div>
                         </div>
                      </div>
 
-                     <div class="modal fade" id="edit_payment_method_{{ method.id }}" tabindex="-1" role="dialog" aria-labelledby="edit_payment_method_{{ method.id }}" aria-hidden="true">
+                     <div class="modal fade" id="edit_payment_method_{{ method[0] }}" tabindex="-1" role="dialog" aria-labelledby="edit_payment_method_{{ method[0] }}" aria-hidden="true">
                       <div class="modal-dialog" role="document">
 
                           <div class="modal-content">
 
                              <div class="modal-header">
-                                   <h2 class="modal-title" id="edit_payment_method_{{ method.id }}">Edycja metod płatności</h2>
+                                   <h2 class="modal-title" id="edit_payment_method_{{ method[0] }}">Edycja metod płatności</h2>
                              </div>
 
                              Aby zmienić nazwę metody płatności, wypełnij poniższe pole
@@ -335,7 +335,7 @@
 
                                    <div class="form-group">
                                       <div class="input-group">
-                                         <input id="paymentMethodName" type="hidden" class="form-control" name="paymentMethodName" value="{{ method.name }}">
+                                         <input id="paymentMethodName" type="hidden" class="form-control" name="paymentMethodName" value="{{ method[1] }}">
                                       </div>
                                    </div>
 
@@ -343,7 +343,7 @@
                                     <label for="inputNewPaymentMethod">Nowa metoda płatności:</label>
                                     <div class="input-group">
                                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                                       <input id="inputNewPaymentMethod" type="text" class="form-control" name="inputNewPaymentMethod" placeholder="Nowa nazwa" value="{{ method.name }}" required />
+                                       <input id="inputNewPaymentMethod" type="text" class="form-control" name="inputNewPaymentMethod" placeholder="Nowa nazwa" value="{{ method[1] }}" required />
                                     </div>
                                  </div>
 
@@ -356,22 +356,22 @@
                       </div>
                     </div>
 
-                    <div class="modal fade" id="delete_payment_method_{{ method.id }}" tabindex="-1" role="dialog" aria-labelledby="delete_payment_method_{{ method.id }}" aria-hidden="true">
+                    <div class="modal fade" id="delete_payment_method_{{ method[0] }}" tabindex="-1" role="dialog" aria-labelledby="delete_payment_method_{{ method[0] }}" aria-hidden="true">
                       <div class="modal-dialog" role="document">
 
                           <div class="modal-content">
 
                              <div class="modal-header">
-                                   <h2 class="modal-title" id="delete_payment_method_{{ method.id }}">Usuwanie metody płatności</h2>
+                                   <h2 class="modal-title" id="delete_payment_method_{{ method[0] }}">Usuwanie metody płatności</h2>
                              </div>
 
-                             Czy jesteś pewny, że chcesz usunąć metodę płatności - {{ method.name }}?
+                             Czy jesteś pewny, że chcesz usunąć metodę płatności - {{ method[1] }}?
 
                              <form method="POST" action="/settings/deletePaymentMethod">
                                 <div class="modal-body">
                                    <div class="form-group">
                                       <div class="input-group">
-                                         <input id="paymentMethodId" type="hidden" class="form-control" name="paymentMethodId" value="{{ method.id }}">
+                                         <input id="paymentMethodId" type="hidden" class="form-control" name="paymentMethodId" value="{{ method[0] }}">
                                       </div>
                                    </div>
                                    <button type="submit" class="btn btn-success">Tak</button>
