@@ -19,8 +19,12 @@ class Settings extends Authenticated
     {
          if (isset($_SESSION['user_id'])) {
              $settingsModel = new SettingsModel($_POST);
-             $settingsModel->editIncomeCategory($_SESSION['user_id']);
-             Flash::addMessage('Nazwa kategorii zmieniona pomyślnie');
+             if ($settingsModel->editIncomeCategory($_SESSION['user_id'])){
+                Flash::addMessage('Nazwa kategorii zmieniona pomyślnie');
+             }
+             else {
+                Flash::addError('Istnieje już taka kategoria');
+             }
              View::renderTemplate('/Settings/index.html');
          }
     }
@@ -40,8 +44,12 @@ class Settings extends Authenticated
     {
          if (isset($_SESSION['user_id'])) {
               $settingsModel = new SettingsModel($_POST);
-              $settingsModel->addIncomeCategory($_SESSION['user_id']);
-              Flash::addMessage('Kategoria została dodana');
+              if ($settingsModel->addIncomeCategory($_SESSION['user_id'])){
+                 Flash::addMessage('Kategoria została dodana');
+              }
+              else {
+                 Flash::addError('Istnieje już taka kategoria');
+              }
               View::renderTemplate('/Settings/index.html');
          }
     }
@@ -50,8 +58,12 @@ class Settings extends Authenticated
    {
          if (isset($_SESSION['user_id'])) {
              $settingsModel = new SettingsModel($_POST);
-             $settingsModel->editExpenseCategory($_SESSION['user_id']);
-             Flash::addMessage('Nazwa kategorii zmieniona pomyślnie');
+             if ($settingsModel->editExpenseCategory($_SESSION['user_id'])){
+                Flash::addMessage('Nazwa kategorii zmieniona pomyślnie');
+             }
+             else {
+                Flash::addError('Istnieje już taka kategoria');
+             }
              View::renderTemplate('/Settings/index.html');
          }
    }
@@ -71,8 +83,12 @@ class Settings extends Authenticated
    {
       if (isset($_SESSION['user_id'])) {
            $settingsModel = new SettingsModel($_POST);
-           $settingsModel->addExpenseCategory($_SESSION['user_id']);
-           Flash::addMessage('Kategoria została dodana');
+           if ($settingsModel->addExpenseCategory($_SESSION['user_id'])){
+             Flash::addMessage('Kategoria została dodana');
+           }
+           else {
+             Flash::addError('Istnieje już taka kategoria');
+           }
            View::renderTemplate('/Settings/index.html');
       }
    }
@@ -81,8 +97,12 @@ class Settings extends Authenticated
   {
         if (isset($_SESSION['user_id'])) {
             $settingsModel = new SettingsModel($_POST);
-            $settingsModel->editPaymentMethod($_SESSION['user_id']);
-            Flash::addMessage('Nazwa metody zmieniona pomyślnie');
+            if ($settingsModel->editPaymentMethod($_SESSION['user_id'])){
+             Flash::addMessage('Nazwa metody zmieniona pomyślnie');
+           }
+           else {
+             Flash::addError('Istnieje już taka metoda');
+           }
             View::renderTemplate('/Settings/index.html');
         }
   }
@@ -102,8 +122,12 @@ class Settings extends Authenticated
   {
      if (isset($_SESSION['user_id'])) {
           $settingsModel = new SettingsModel($_POST);
-          $settingsModel->addPaymentMethod($_SESSION['user_id']);
-          Flash::addMessage('Metoda płatności została dodana');
+          if ($settingsModel->addPaymentMethod($_SESSION['user_id'])){
+           Flash::addMessage('Metoda płatności została dodana');
+         }
+         else {
+           Flash::addError('Istnieje już taka metoda');
+         }
           View::renderTemplate('/Settings/index.html');
      }
   }
@@ -118,7 +142,7 @@ class Settings extends Authenticated
      }
   }
 
-  public function editPassword()
+  public function editPasswordAction()
   {
      if (isset($_SESSION['user_id'])) {
           $settingsModel = new SettingsModel($_POST);
@@ -126,8 +150,7 @@ class Settings extends Authenticated
           if ($settingsModel->editPassword($_SESSION['user_id'])){
           Flash::addMessage('Hasło zostało zmienione');
          }
-
-          View::renderTemplate('/Settings/index.html');
+         View::renderTemplate('/Settings/index.html');
      }
   }
 
@@ -141,9 +164,4 @@ class Settings extends Authenticated
           View::renderTemplate('Home/index.html');
      }
   }
-
-
-
-
-
 }

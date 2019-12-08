@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use PDO;
+use \App\Flash;
+use \App\Models\IncomeModel;
+use \App\Models\ExpenseModel;
 
 class SettingsModel extends \Core\Model
 
@@ -16,8 +19,25 @@ class SettingsModel extends \Core\Model
         };
     }
 
+    private function checkIfExist($name1, $data_array)
+    {
+      $string1 = strtolower($name1);
+
+      foreach ($data_array as list($id, $name)) {
+          $string2 = strtolower($name);
+          if ($string1 == $string2){
+            return true;
+          }
+       }
+      return false;
+    }
+
     public function editIncomeCategory($id)
     {
+        if ($this->checkIfExist($this->inputNewIncomeCategory, IncomeModel::getIncomeCategories($id))){
+           return false;
+        }
+
         $sql = 'UPDATE incomes_category_assigned_to_users SET name = :name WHERE user_id = :id AND name = :pastName';
 
         $db = static::getDB();
@@ -55,6 +75,10 @@ class SettingsModel extends \Core\Model
 
        public function addIncomeCategory($id)
        {
+          if ($this->checkIfExist($this->inputNewIncomeCategory, IncomeModel::getIncomeCategories($id))){
+             return false;
+          }
+
           $sql = 'INSERT INTO incomes_category_assigned_to_users (user_id, name) VALUES (:id, :name)';
 
           $db = static::getDB();
@@ -67,6 +91,10 @@ class SettingsModel extends \Core\Model
 
      public function editExpenseCategory($id)
      {
+        if ($this->checkIfExist($this->inputNewExpenseCategory, ExpenseModel::getExpenseCategories($id))){
+           return false;
+        }
+
         $sql = 'UPDATE expenses_category_assigned_to_users SET name = :name WHERE user_id = :id AND name = :pastName';
 
         $db = static::getDB();
@@ -104,6 +132,10 @@ class SettingsModel extends \Core\Model
 
        public function addExpenseCategory($id)
        {
+          if ($this->checkIfExist($this->inputNewExpenseCategory, ExpenseModel::getExpenseCategories($id))){
+             return false;
+          }
+
           $sql = 'INSERT INTO expenses_category_assigned_to_users (user_id, name) VALUES (:id, :name)';
 
           $db = static::getDB();
@@ -116,6 +148,10 @@ class SettingsModel extends \Core\Model
 
        public function editPaymentMethod($id)
        {
+          if ($this->checkIfExist($this->inputNewPaymentMethod, ExpenseModel::getPaymentMethods($id))){
+             return false;
+          }
+
           $sql = 'UPDATE payment_methods_assigned_to_users SET name = :name WHERE user_id = :id AND name = :pastName';
 
           $db = static::getDB();
@@ -153,6 +189,10 @@ class SettingsModel extends \Core\Model
 
       public function addPaymentMethod($id)
       {
+         if ($this->checkIfExist($this->inputNewPaymentMethod, ExpenseModel::getPaymentMethods($id))){
+           return false;
+         }
+
           $sql = 'INSERT INTO payment_methods_assigned_to_users (user_id, name) VALUES (:id, :name)';
 
           $db = static::getDB();
@@ -196,6 +236,7 @@ class SettingsModel extends \Core\Model
 
          if (!password_verify($password, $userPassword)) {
          $this->errors[] = 'Obecne hasło niepoprawne';
+         Flash::addError('Obecne hasło niepoprawne');
          }
     }
 
@@ -203,18 +244,22 @@ class SettingsModel extends \Core\Model
    {
         if (strlen($this->newPassword) < 6) {
             $this->errors[] = 'Hasło powinno mieć co najmniej 6 znaków';
+            Flash::addError('Hasło powinno mieć co najmniej 6 znaków');
         }
 
         if (preg_match('/.*[a-z]+.*/i', $this->newPassword) == 0) {
             $this->errors[] = 'Hasło powinno mieć co najmniej jedną literę';
+            Flash::addError('Hasło powinno mieć co najmniej jedną literę');
         }
 
         if (preg_match('/.*\d+.*/i', $this->newPassword) == 0) {
             $this->errors[] = 'Hasło powinno mieć co najmniej jedną cyfrę';
+            Flash::addError('Hasło powinno mieć co najmniej jedną cyfrę');
         }
 
         if ($this->newPassword != $this->newPasswordConfirmation) {
             $this->errors[] = 'Hasła muszą być zgodne';
+            Flash::addError('Hasła muszą być zgodne');
         }
    }
 

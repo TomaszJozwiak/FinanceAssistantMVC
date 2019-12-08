@@ -22,7 +22,6 @@
         );
 
         $(document).ready(function() {
-
             $('#editPassword').validate({
                 rules: {
                     oldPassword: {
@@ -38,11 +37,10 @@
                     newPasswordConfirmation: {
                          equalTo: '#newPassword'
                      }
-                }
-                    }
-                }
+                  }
             });
         });
+
     </script>
 
 {% endblock %}
@@ -59,6 +57,12 @@
                  <div class="success">
                     {{ message }}
                  </div><br/>
+              {% endfor %}
+
+              {% for message in flash_errors %}
+                <div class="failure">
+                    {{ message }}
+                </div><br/>
               {% endfor %}
 
               <button class="btn btn-warning btn-block custom-btn" data-toggle="collapse"  data-target="#editIncomes"><b>Kategorie przychodów</b></button>
@@ -473,7 +477,7 @@
                                <h2 class="modal-title" id="edit_password">Zmiana hasła</h2>
                          </div>
 
-                         <form method="POST" action="/settings/editPassword" id='editPassword'>
+                         <form method="POST" action="/settings/editPassword" id="editPassword">
                             <div class="modal-body">
 
                                <div class="form-group">
@@ -500,7 +504,7 @@
                                   </div>
                                </div>
 
-                               <button type="submit" class="btn btn-success">Zmień</button>
+                               <button id ="edit_password_submit" type="submit" class="btn btn-success">Zmień</button>
                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                             </div>
                          </form>
@@ -540,13 +544,9 @@
                            </div>
                         </div>
                      </div>
-
-
+                  </article>
              </div><br/>
-
-           </article>
         </div>
      </div>
-  </div>
 </main>
 {% endblock %}

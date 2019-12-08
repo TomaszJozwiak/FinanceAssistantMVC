@@ -37,6 +37,7 @@ class View
             $twig->addGlobal('dataChart', \App\Controllers\Balance::getDataToChart());
             $twig->addGlobal('categoryCounter', \App\Controllers\Balance::getCategoryCounter());
             $twig->addGlobal('flash_messages', \App\Flash::getMessages());
+            $twig->addGlobal('flash_errors', \App\Flash::getErrors());
         }
         echo $twig->render($template, $args);
     }
