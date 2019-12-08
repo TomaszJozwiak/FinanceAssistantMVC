@@ -146,6 +146,31 @@ class SettingsModel extends \Core\Model
           $stmt->execute();
        }
 
+       public function editLimit($id)
+       {
+          $sql = 'UPDATE expenses_category_assigned_to_users SET monthly_limit = :monthlyLimit WHERE user_id = :id AND name = :pastName';
+
+          $db = static::getDB();
+          $stmt = $db->prepare($sql);
+          $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+          $stmt->bindValue(':pastName', $this->expenseCategoryName, PDO::PARAM_STR);
+          $stmt->bindValue(':monthlyLimit', $this->monthlyLimit);
+
+          $stmt->execute();
+       }
+
+       public function deleteLimit($id)
+       {
+          $sql = 'UPDATE expenses_category_assigned_to_users SET monthly_limit = NULL WHERE user_id = :id AND name = :pastName';
+
+          $db = static::getDB();
+          $stmt = $db->prepare($sql);
+          $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+          $stmt->bindValue(':pastName', $this->expenseCategoryName, PDO::PARAM_STR);
+
+          $stmt->execute();
+       }
+
        public function editPaymentMethod($id)
        {
           if ($this->checkIfExist($this->inputNewPaymentMethod, ExpenseModel::getPaymentMethods($id))){

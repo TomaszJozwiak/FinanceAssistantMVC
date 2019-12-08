@@ -62,7 +62,7 @@ class Settings extends Authenticated
                 Flash::addMessage('Nazwa kategorii zmieniona pomyślnie');
              }
              else {
-                Flash::addError('Istnieje już taka kategoria');
+              Flash::addError('Istnieje już taka kategoria');
              }
              View::renderTemplate('/Settings/index.html');
          }
@@ -162,6 +162,26 @@ class Settings extends Authenticated
           Auth::logout();
           Flash::addMessage('Konto zostało usunięte');
           View::renderTemplate('Home/index.html');
+     }
+  }
+
+  public function editLimit()
+  {
+     if (isset($_SESSION['user_id'])) {
+          $settingsModel = new SettingsModel($_POST);
+          $settingsModel->editLimit($_SESSION['user_id']);
+          Flash::addMessage('Limit został edytowany');
+          View::renderTemplate('/Settings/index.html');
+     }
+  }
+
+  public function deleteLimit()
+  {
+     if (isset($_SESSION['user_id'])) {
+          $settingsModel = new SettingsModel($_POST);
+          $settingsModel->deleteLimit($_SESSION['user_id']);
+          Flash::addMessage('Limit został usunięty');
+          View::renderTemplate('/Settings/index.html');
      }
   }
 }

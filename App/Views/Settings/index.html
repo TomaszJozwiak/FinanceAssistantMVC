@@ -189,15 +189,18 @@
               <div id="editExpenses" class="collapse">
                  {% for categories in expense_categories %}
                  <div style="padding: 30px;">
-                       <div class="col-sm-6">
+                       <div class="col-sm-4">
                           {{ categories[1] }}
                        </div>
-                        <div class="col-sm-6">
-                           <div class="col-sm-6">
-                                <button type="button" class="btn btn-primary btn-block" href="#edit_expense_category_{{ categories[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span> Edytuj</button>
+                        <div class="col-sm-8">
+                           <div class="col-sm-4">
+                                <button type="button" class="btn btn-primary" href="#edit_expense_category_{{ categories[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-wrench"></span> Edytuj</button>
                              </div>
-                             <div class="col-sm-6">
-                                <button type="button" class="btn btn-danger btn-block" href="#delete_expense_category_{{ categories[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
+                             <div class="col-sm-4">
+                                <button type="button" class="btn btn-danger" href="#delete_expense_category_{{ categories[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
+                             </div>
+                             <div class="col-sm-4">
+                                <button type="button" class="btn btn-success" href="#edit_limit_{{ categories[0] }}" data-toggle="modal"><span class="glyphicon glyphicon-ban-circle"></span> Limit</button>
                              </div>
                         </div>
                      </div>
@@ -265,7 +268,59 @@
                           </div>
                       </div>
                     </div>
+
+                    <div class="modal fade" id="edit_limit_{{ categories[0] }}" tabindex="-1" role="dialog" aria-labelledby="edit_limit_{{ categories[0] }}" aria-hidden="true">
+                     <div class="modal-dialog" role="document">
+
+                         <div class="modal-content">
+
+                            <div class="modal-header">
+                                  <h2 class="modal-title" id="edit_limit_{{ categories[0] }}">Edycja limitu</h2>
+                            </div>
+
+                            Dodaj miesięczny limit dla kategorii - {{ categories[1] }}
+
+
+                            <div class="modal-body">
+                               <form method="POST" action="/settings/editLimit">
+
+                                  <div class="form-group">
+                                     <div class="input-group">
+                                        <input id="expenseCategoryName" type="hidden" class="form-control" name="expenseCategoryName" value="{{ categories[1] }}">
+                                     </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <div class="input-group">
+                                       <span class="input-group-addon"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                       <input id="monthlyLimit" type="number" step="0.01" class="form-control monthlyLimit" name="monthlyLimit" placeholder="Limit" value= "{{ categories[2] }}">
+                                     </div>
+                                  </div>
+
+                                  <button type="submit" class="btn btn-success">Zmień</button>
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                               </form>
+
+                               <form method="POST" action="/settings/deleteLimit">
+
+                                  <div class="form-group">
+                                     <div class="input-group">
+                                        <input id="expenseCategoryName" type="hidden" class="form-control" name="expenseCategoryName" value="{{ categories[1] }}">
+                                     </div>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                      <button type="submit" class="btn btn-primary btn-block"> Usuń limit</button>
+                                  </div>
+                               </form>
+                           </div>
+                         </div>
+                     </div>
+                   </div>
                  {% endfor %}
+
+
 
                  <div class="col-sm-12" style="padding: 30px;">
                     <button type="button" class="btn btn-success btn-block" href="#add_new_expense_category" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span> Dodaj nową kategorię</button>
@@ -466,7 +521,7 @@
 
                  <div class="col-sm-12" style="padding-left: 30px; padding-right: 30px; padding-top: 10px;">
                     <button type="button" class="btn btn-primary btn-block" href="#edit_password" data-toggle="modal"><span class="glyphicon glyphicon-lock"></span> Zmień hasło</button>
-                  </div>
+                 </div>
 
                   <div class="modal fade" id="edit_password" tabindex="-1" role="dialog" aria-labelledby="edit_password" aria-hidden="true">
                   <div class="modal-dialog" role="document">

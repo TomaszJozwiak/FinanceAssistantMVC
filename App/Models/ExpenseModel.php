@@ -13,7 +13,7 @@ class ExpenseModel extends \Core\Model
         };
     }
 
-    private static function prepareArray($object)
+    private static function prepareCategoryArray($object)
    {
       $array_category = [];
 
@@ -26,17 +26,39 @@ class ExpenseModel extends \Core\Model
 
            $id = $single_row['id'];
            $name = $single_row['name'];
+           $monthly_limit = $single_row['monthly_limit'];
 
-           array_push($array_category, [$id, $name]);
+           array_push($array_category, [$id, $name, $monthly_limit]);
 
            $i++;
         }
         return $array_category;
    }
 
+   private static function prepareMethodArray($object)
+  {
+     $array_method = [];
+
+     $row_number = $object->rowCount();
+
+     $i = 1;
+     while($i <= $row_number)
+     {
+          $single_row = $object->fetch(PDO::FETCH_ASSOC);
+
+          $id = $single_row['id'];
+          $name = $single_row['name'];
+
+          array_push($array_method, [$id, $name]);
+
+          $i++;
+      }
+      return $array_method;
+  }
+
     public static function getExpenseCategories($id)
     {
-        $sql = 'SELECT id, name FROM expenses_category_assigned_to_users WHERE user_id = :id';
+        $sql = 'SELECT id, name, monthly_limit FROM expenses_category_assigned_to_users WHERE user_id = :id';
 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -44,7 +66,7 @@ class ExpenseModel extends \Core\Model
 
         $stmt->execute();
 
-        return ExpenseModel::prepareArray($stmt);
+        return ExpenseModel::prepareCategoryArray($stmt);
     }
 
 
@@ -58,7 +80,7 @@ class ExpenseModel extends \Core\Model
 
         $stmt->execute();
 
-        return ExpenseModel::prepareArray($stmt);
+        return ExpenseModel::prepareMethodArray($stmt);
     }
 
     public function saveExpense()
