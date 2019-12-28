@@ -9,18 +9,18 @@ use \App\Flash;
 class Expense extends Authenticated
 {
    public static function getUserExpenseCategories()
-  {
+   {
        if (isset($_SESSION['user_id'])) {
            return ExpenseModel::getExpenseCategories($_SESSION['user_id']);
        }
-  }
+   }
 
-  public static function getUserPaymentMethods()
-{
-      if (isset($_SESSION['user_id'])) {
-          return ExpenseModel::getPaymentMethods($_SESSION['user_id']);
-      }
-}
+   public static function getUserPaymentMethods()
+   {
+         if (isset($_SESSION['user_id'])) {
+             return ExpenseModel::getPaymentMethods($_SESSION['user_id']);
+         }
+   }
 
     public function newAction()
     {
