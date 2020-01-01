@@ -1,5 +1,43 @@
 {% extends 'loggedIn.html' %}
 
+{% block footer %}
+
+<script>
+
+  $(document).ready(function(){
+     $("#amount").keyup(function() {
+
+         var amount = $("#amount").val();
+         var category = $("#category").val();
+         $.post("/expense/showMonthlyLimit", {
+            category: category,
+            amount: amount
+            
+         }, function (data, status) {
+            $("#result").html(data);
+         });
+     });
+  });
+
+  $(document).ready(function(){
+     $('#category').on('change', function() {
+
+         var amount = $("#amount").val();
+         var category = $("#category").val();
+         $.post("/expense/showMonthlyLimit", {
+            category: category,
+            amount: amount
+            
+         }, function (data, status) {
+            $("#result").html(data);
+         });
+     });
+  });
+
+</script>
+
+{% endblock %}
+
 {% block body %}
 
 <main>
@@ -16,6 +54,8 @@
                     {{ message }}
                  </div>
               {% endfor %}
+
+              <div id="result"></div>
 
               <br/>
               <form method="post" id="expense_form" action="/expense/create">
@@ -48,7 +88,7 @@
 
                  <div class="form-group">
                     <label for="selection_expense">Kategoria:</label>
-                    <select class="form-control" name="category">
+                    <select class="form-control" name="category" id='category'>
 
                        {% for categories in expense_categories %}
                              <option value="{{ categories[0] }}" required>{{ categories[1] }}</option>

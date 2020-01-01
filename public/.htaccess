@@ -1,4 +1,9 @@
 # Remove the question mark from the request but maintain the query string
+
+<Files *.php>
+ ForceType application/x-httpd-php72
+</Files>
+
 RewriteEngine On
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f

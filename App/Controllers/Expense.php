@@ -42,4 +42,14 @@ class Expense extends Authenticated
              View::renderTemplate('/Expense/new.html');
          }
     }
+
+    public static function showMonthlyLimitAction()
+    {  
+        $amount = $_POST['amount'];
+        $category = $_POST['category'];
+
+        if (isset($_SESSION['user_id'])) {
+            ExpenseModel::showMonthlyLimit($amount, $category);
+        } 
+    }
 }
